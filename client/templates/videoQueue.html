@@ -1,0 +1,39 @@
+<template name="videoQueue">
+  <form class="queueForm">
+    <div class="input-group">
+      {{#if currentUser}}
+        <input type="text" class="form-control" id="queueInput" placeholder="Give me a Youtube, Vimeo, or google drive mp4 URL!">
+        <div class="input-group-btn">
+          <button id="queueButton" class="btn btn-primary" type="submit">Queue Video</button>
+        </div>
+      {{else}}
+        <input type="text" class="form-control" id="queueInput-disabled" placeholder="Please sign in/up to queue a video!" disabled>
+        <div class="input-group-btn">
+          <button id="queueButton-disabled" class="btn btn-primary" type="submit" disabled>Queue Video</button>
+        </div>
+      {{/if}}
+    </div>
+  </form>
+  <table class="table table-condensed table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Type</th>
+        <th>Video Title</th>
+        <th>Inserted By</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each getVideoQueue}}
+        <tr class="{{checkIndex @index}}">
+          <td>{{@index}}</td>
+          <td>{{videoType}}</td>
+          <td>{{videoTitle}}</td>
+          <td>{{queuedBy}}</td>
+          <td>{{endTime}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+</table>
+</template>

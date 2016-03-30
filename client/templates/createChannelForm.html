@@ -1,0 +1,24 @@
+<template name="createChannelForm">
+  {{#if isInvalidChannelInput}}
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      Incorrect channel information!
+    </div>
+  {{/if}}
+
+  <form id="channelCreateForm" class="form-inline login-form-color" >
+    <div class="center-form-buttons">
+      <div class="form-group">
+        <input type="text" class="form-control" id="channelName" placeholder="URL Handler(Unique)" min="3" max="12">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="channelTopic" placeholder="Channel Topic" min="5" max="32">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id="channelPassword" placeholder="Password (Can leave blank)" min="0" max="16">
+      </div>
+      <button type="submit" id="channelCreateButton" class="btn btn-default">Create Channel</button>
+    </div>
+  </form>
+</template>

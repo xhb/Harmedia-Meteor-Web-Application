@@ -1,0 +1,12 @@
+[ ] Clean up and comment code
+[ ] Add video sychronization on the server using MapReduce (possibly)
+[ ] Add it so moderators can ban and silence users
+[ ] Add it so channels can be browsed using our browser
+[ ] Add it so users can add tags to their channelPassword
+[ ] Reorganize code and structure it better
+[ ] Optimize chat so we don't store so much
+[ ] At a dummy user to be the user who sends messages regarding bans, silences, joins, etc (harmedianotify).
+[ ] Handle dealing with channels viewers better
+[ ] Add vimeo support
+[ ] Add Mp4 support
+[ ] Finish customizing player buttons

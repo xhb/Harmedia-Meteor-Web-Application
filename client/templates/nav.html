@@ -1,0 +1,33 @@
+<template name="nav">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">HM</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="{{isActivePage}}"><a href="/">Home</a></li>
+          <li><a href="/list/channels" class="{{isActivePage}}">Channel Browser</a></li>
+          {{#if currentUser}}
+          {{else}}
+            <li><a href="/login" class="{{isActivePage}}">Sign In</a></li>
+            <li><a href="/signup" class="{{isActivePage}}">Sign Up</a></li>
+          {{/if}}
+        </ul>
+        {{#if currentUser}}
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{getCurrentUser.username}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/mychannels">Create/Edit Channel</a></li>
+                <li><a id="deleteAccount"><span class="glyphicon glyphicon-trash"></span> Delete Account</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a id="logout"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+              </ul>
+            </li>
+          </ul>
+      {{/if}}
+      </div>
+    </div>
+  </nav>
+</template>

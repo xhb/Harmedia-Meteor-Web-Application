@@ -1,0 +1,9 @@
+<template name="myChannels">
+  {{#if currentUser}}
+    <h1 class="c_center">{{getCurrentUsername.username}}'s Channel Page</h1>
+    {{> createChannelForm}}
+    {{> displayUsersChannels}}
+  {{else}}
+    {{redirectHome}}
+  {{/if}}
+</template>

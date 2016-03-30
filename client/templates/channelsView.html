@@ -1,0 +1,19 @@
+<template name="channelPage">
+  {{#if channel}}
+    <div class="c_center">
+      <h2> {{channel.channelTopic}} </h2>
+      <p>Owner: {{channel.ownerName}}</p>
+      <p>Viewer Count: {{channel.viewerCount}}</p>
+    </div>
+    {{> chatbox }}
+    {{> channelViewerList}}
+    {{> player}}
+    {{> videoQueue}}
+  {{else}}
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      Channel not found!  Sign up and claim this channel's name!!
+    </div>
+  {{/if}}
+</template>
