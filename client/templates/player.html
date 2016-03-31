@@ -1,6 +1,7 @@
 <template  name="player">
-  <input id="seek-bar" class="seek-bar" type="range"> 
-  <button id="play-pause-button"><span class="glyphicon glyphicon glyphicon-play"></span></button>
+  <input id="seek-bar" class="seek-bar" type="range" value="{{getCurrentChannelObject.currentTime}}" min=0 max="{{getCurrentChannelObject.endTime}}">
+  <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon glyphicon-pause"></span></button>
   <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button>
   <input id="volume-bar" class="volume-bar" type="range">
+  <h1>{{formatCurrentTime getCurrentChannelObject.currentTime}}/{{formatCurrentTime getCurrentChannelObject.endTime}}</h1>
 </template>

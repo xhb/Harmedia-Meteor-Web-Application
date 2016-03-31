@@ -113,19 +113,48 @@ Meteor.methods({
     return true;
   },
   addVideoToQueue(url, type, vId, title, duration) {
-    ChannelsQueue.insert({
-      videoType: type,
-      videoId: vId,
-      roomURLHandler: url,
-      videoTitle: title,
-      currentTime: 0,
-      endTime: duration,
-      queuedBy: Meteor.user().username
-    });
+    var videoQueue = ChannelsQueue.find({ roomURLHandler: url }).count() > 0;
+    if (!videoQueue) {
+      ChannelsQueue.insert({
+        videoType: type,
+        videoId: vId,
+        roomURLHandler: url,
+        videoTitle: title,
+        currentTime: 0,
+        endTime: duration,
+        videoState: "playing",
+        queuedBy: Meteor.user().username
+      });
+      console.log("Queue is empty! Video added with the playing state!");
+    }
+    else {
+      ChannelsQueue.insert({
+        videoType: type,
+        videoId: vId,
+        roomURLHandler: url,
+        videoTitle: title,
+        currentTime: 0,
+        endTime: duration,
+        videoState: null,
+        queuedBy: Meteor.user().username
+      });
+      console.log("Video added to queue!");
+    }
     return true;
   },
   removeVideoFromTopOfQueue(url) {
-    return;
+    try {
+      var videoObject = ChannelsQueue.findOne({ roomURLHandler: url });
+      //console.log(videoObject);
+      ChannelsQueue.remove({ _id: videoObject["_id"] }); //removing first video in queue
+      ChannelsQueue.update({ roomURLHandler: url }, { $set: { videoState: "playing"} }); //getting next video
+      console.log("Set next video to playing!");
+      return videoObject;
+    }
+    catch (e) {
+      console.log("No video found in queue!");
+      return null; //may want to just do false
+    }
   },
   getCurrentVideoForURL(url) {
     try {
@@ -134,5 +163,9 @@ Meteor.methods({
     catch(e) {
       return null;
     }
-  }
+  },
+  /*updateChannelCurrentTimes: function() {
+    ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
+    return true;
+  }*/
 });

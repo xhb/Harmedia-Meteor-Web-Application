@@ -24,5 +24,11 @@ Meteor.publish('getCurrentChannelQueue', function(cURL) {
 });
 
 Meteor.publish('top10Channels', function() {
-  return Channels.find({}); 
+  return Channels.find({});
 });
+
+//################################################ TESTING ########################################################################//
+
+Meteor.setInterval(function() {
+  ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
+}, 1000);
