@@ -1,4 +1,3 @@
-//may be a better way to do this
 var ytPlayer;
 
 Template.video.helpers({
@@ -27,8 +26,9 @@ Template.video.helpers({
   },
   checkSeek: function() {
     var channelVideoObject = ChannelsQueue.findOne({});
+    var clientTime;
     try {
-      var clientTime = ytPlayer.getCurrentTime();
+      clientTime = ytPlayer.getCurrentTime();
     }
     catch(e) {
       console.log("Can't get current time atm!");
@@ -73,12 +73,23 @@ function renderYoutubeScript() {
           videoId: videoPlaying["videoId"],
           events: {
               onReady: function (event) {
-                  event.target.playVideo();
+                if (videoPlaying['videoState'] === "paused") {
+                  //event.target.pauseVideo();
                   ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                  ytPlayer.pauseVideo();
+                }
+                else if (videoPlaying["videoState"] === "playing") {
+                  //event.target.playVideo();
+                  ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                  ytPlayer.playVideo();
+                }
+                else {
+                  console.log("Something is messed up!");
+                }
               },
           },
           playerVars: {
-            'controls': 1,
+            'controls': 0,
         }
       });
   };
