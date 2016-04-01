@@ -11,3 +11,4 @@
 [ ] Add Mp4 support
 [ ] Finish customizing player buttons
 [ ] Maybe rewrite this completely (Use a more object oriented approach!)
+[ ] May want to remove adrianliaw:youtube-iframe-api (??)

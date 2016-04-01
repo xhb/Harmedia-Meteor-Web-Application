@@ -1,4 +1,5 @@
 <template  name="player">
+  {{> video}}
   {{#if isGuru}}
     <input id="seek-bar" class="seek-bar-class" type="range" value="{{getCurrentChannelTime}}" min=0 max="{{getEndChannelTime}}">
     {{#if isVideoPaused}}
