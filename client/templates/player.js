@@ -50,7 +50,7 @@ Template.player.helpers({
 });
 
 Template.player.events({
-  'click #skip-button': function(e) {
+    'click #skip-button': function(e) {
     e.preventDefault();
     //var URL = Router.current().request.url.split("/")[4];
     var channelObject = Channels.findOne({});

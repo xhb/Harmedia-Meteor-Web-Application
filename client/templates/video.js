@@ -1,4 +1,5 @@
 var ytPlayer;
+var previousVideoId;
 
 Template.video.helpers({
   //helpers go here
@@ -24,7 +25,8 @@ Template.video.helpers({
       console.log("Something is messed up!");
     }
   },
-  checkSeek: function() {
+  checkSyncTime: function() {
+    //look into this
     var channelVideoObject = ChannelsQueue.findOne({});
     var clientTime;
     try {
@@ -46,6 +48,30 @@ Template.video.helpers({
       //console.log("OUT OF SYNC!");
     }
   },
+  //maybe delete this later
+  checkForNewVideo: function() {
+    var channelVideoObject = ChannelsQueue.findOne({});
+    if (channelVideoObject["videoId"] !== previousVideoId) {
+      //it has changed
+      //ytPlayer.videoId =  channelVideoObject["videoId"];
+      //YT.load();
+      try {
+        ytPlayer.loadVideoById(channelVideoObject["videoId"], 0, "large");
+        previousVideoId = channelVideoObject["videoId"];
+        //console.log("New video!");
+      }
+      catch(e) {
+        console.log("Video unable to load because null!");
+      }
+    }
+    else if (channelVideoObject["videoId"] === previousVideoId) {
+      //console.log("Old video!");
+      return;
+    }
+    else {
+      console.log("Something went wrong!");
+    }
+  }
 });
 
 Template.video.events({
@@ -64,7 +90,7 @@ Template.video.rendered = function(){
 function renderYoutubeScript() {
   //using adrianliaw:youtube-iframe-api
   var videoPlaying = ChannelsQueue.findOne({});
-
+  previousVideoId = videoPlaying['videoId'] || null; //look at this
   onYouTubeIframeAPIReady = function () {
       ytPlayer = new YT.Player("youtube-player", {
           height: "390",
