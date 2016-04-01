@@ -164,6 +164,27 @@ Meteor.methods({
       return null;
     }
   },
+  updateTimeSeek: function(url, timeInSeconds) {
+    try {
+      var currentVideoID = ChannelsQueue.findOne({})["_id"];
+      //console.log(currentVideoID);
+      ChannelsQueue.update({ _id: currentVideoID }, { $set: { currentTime: timeInSeconds } }); //may be inefficient
+      return true;
+    }
+    catch(e) {
+      return false;
+    }
+  },
+  updateVideoState: function(url,state) {
+    try {
+      var currentVideoID = ChannelsQueue.findOne({})["_id"];
+      ChannelsQueue.update({ _id: currentVideoID }, { $set: { videoState: state } }); //may be inefficient
+      return true;
+    }
+    catch(e) {
+      return false;
+    }
+  }
   /*updateChannelCurrentTimes: function() {
     ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
     return true;
