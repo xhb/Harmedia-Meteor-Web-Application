@@ -27,8 +27,8 @@ Meteor.publish('top10Channels', function() {
   return Channels.find({});
 });
 
-//################################################ TESTING ########################################################################//
 
 Meteor.setInterval(function() {
   ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
+  //remove this if I want to try and make more efficient
 }, 1000);

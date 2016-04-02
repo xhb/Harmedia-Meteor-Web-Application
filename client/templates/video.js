@@ -71,7 +71,7 @@ Template.video.helpers({
     else {
       console.log("Something went wrong!");
     }
-  }
+  },
 });
 
 Template.video.events({

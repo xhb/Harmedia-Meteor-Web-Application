@@ -70,7 +70,7 @@ Template.player.events({
     var channelObject = Channels.findOne({});
     var URL = channelObject["channelURL"];
     var spanElement = document.getElementById('togglePlause');
-    console.log(spanElement);
+    //console.log(spanElement);
     if (spanElement.className === "glyphicon glyphicon-play") {
       spanElement.className = "glyphicon glyphicon-pause";
       //start video (unpause youtube video)
