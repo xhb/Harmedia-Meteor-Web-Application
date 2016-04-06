@@ -1,13 +1,18 @@
 Template.editChannelPage.events({
   'submit #channelUpdateForm': function(e,t) {
     e.preventDefault();
-    var gettingPath = Iron.Location.get().path;
-    var pathSplit = gettingPath.split("/");
-    var urlHandler = pathSplit[2].trim();
+    //var gettingPath = Iron.Location.get().path;
+    //var pathSplit = gettingPath.split("/");
+    //var urlHandler = pathSplit[2].trim();
+    var urlHandler = Channels.findOne({})["channelURL"]; //getting channel url
     var topic = t.find('#inputTopic').value.trim();
     var password = t.find('#inputPassword').value.trim();
-    var tags = t.find("#inputTags").value.trim();
-    if (isValidLength(topic, 5, 32) && isValidLength(password,0,16)) {
+    //var tags = t.find("#inputTags").value.trim();
+
+    var tags = Template.taggle.__helpers.get('getAllTags')();
+    console.log(tags);
+    //var tags = "";
+    if (isValidLength(topic, 5, 32) && isValidLength(password,0,16) && checkTagLength(tags,10)) {
       Session.set('isInvalidChannelInput',null);
       doUpdate(t,urlHandler,topic,password,tags);
     }
@@ -27,7 +32,7 @@ function doUpdate(t,urlHandler,topic,password,tags) {
       Session.set('isInvalidChannelInput',null);
       t.find('#inputTopic').value = "";
       t.find('#inputPassword').value = "";
-      t.find('#inputTags').value = "";
+      //t.find('#taggle-tags').value = "";
 
       console.log("Success!");
       Router.go('/mychannels');
@@ -47,4 +52,8 @@ Template.editChannelPage.helpers({
 
 function isValidLength(val,small,big) {
   return val.length >= small && val.length <= big;
+}
+
+function checkTagLength(t,l) {
+  return t.length < l;
 }
