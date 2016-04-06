@@ -92,6 +92,9 @@ Template.video.helpers({
       console.log("Something went wrong!");
     }
   },
+  getPlayerObject: function() {
+    return ytPlayer;
+  }
 });
 
 Template.video.events({

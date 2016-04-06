@@ -51,6 +51,9 @@ Template.player.helpers({
       console.log("No video playing");
       return false;
     }
+  },
+  canSkip: function() {
+    return true;
   }
 });
 
@@ -121,6 +124,10 @@ Template.player.events({
         console.log("Starting the video at time " + changeTimeTo + "!");
       }
     });
+  },
+  'change #volume-bar': function() {
+    var volumeChangeTo = parseInt($('input[id=volume-bar]').val());
+    Template.video.__helpers.get('getPlayerObject')().setVolume(volumeChangeTo);
   }
 });
 

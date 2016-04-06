@@ -10,7 +10,7 @@ Template.editChannelPage.events({
     //var tags = t.find("#inputTags").value.trim();
 
     var tags = Template.taggle.__helpers.get('getAllTags')();
-    console.log(tags);
+    //console.log(tags);
     //var tags = "";
     if (isValidLength(topic, 5, 32) && isValidLength(password,0,16) && checkTagLength(tags,10)) {
       Session.set('isInvalidChannelInput',null);
@@ -55,5 +55,6 @@ function isValidLength(val,small,big) {
 }
 
 function checkTagLength(t,l) {
+  //the length of array t has to be greater than 0 or less than l
   return t.length < l;
 }

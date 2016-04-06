@@ -8,7 +8,9 @@
       <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-pause"></span></button>
     {{/if}}
   {{/if}}
-  <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button> <!-- Owners, Mods, Gurus have ability to skip -->
+  {{#if canSkip}}
+    <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button> <!-- Owners, Mods, Gurus have ability to skip -->
+  {{/if}}
   <input id="volume-bar" class="volume-bar-class" type="range">
   <h1>Current Video Server Time: {{formatCurrentTime getCurrentChannelTime}}/{{formatCurrentTime getEndChannelTime}}</h1>
 </template>
