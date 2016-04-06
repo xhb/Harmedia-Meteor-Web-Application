@@ -29,6 +29,11 @@ Meteor.publish('top10Channels', function() {
 
 
 Meteor.setInterval(function() {
-  ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
+  try {
+    ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
+  }
+  catch(e) {
+    console.log("Could not update video time!");
+  }
   //remove this if I want to try and make more efficient
 }, 1000);

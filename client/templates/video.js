@@ -4,7 +4,14 @@ var previousVideoId;
 Template.video.helpers({
   //helpers go here
   checkToPause: function() {
-    var channelVideoObject = ChannelsQueue.findOne({});
+    try {
+        var channelVideoObject = ChannelsQueue.findOne({});
+        channelVideoObject["videoState"] = channelVideoObject["videoState"];
+    }
+    catch(e) {
+      console.log("Unable to get video state!");
+      return;
+    }
     if (channelVideoObject["videoState"] === "paused") {
       try {
         ytPlayer.pauseVideo();
@@ -35,7 +42,13 @@ Template.video.helpers({
     catch(e) {
       console.log("Can't get current time atm!");
     }
-    var serverTime = channelVideoObject["currentTime"];
+    try {
+        var serverTime = channelVideoObject["currentTime"];
+    }
+    catch(e) {
+      console.log("Unable to get current time!");
+      return;
+    }
 
     if (clientTime < serverTime - 5 || clientTime > serverTime + 5) {
       //if user is way out of sync we will resync
@@ -50,7 +63,14 @@ Template.video.helpers({
   },
   //maybe delete this later
   checkForNewVideo: function() {
-    var channelVideoObject = ChannelsQueue.findOne({});
+    try {
+      var channelVideoObject = ChannelsQueue.findOne({});
+      channelVideoObject["videoId"] = channelVideoObject["videoId"];
+    }
+    catch (e) {
+      console.log("Unable to load videoId");
+      return;
+    }
     if (channelVideoObject["videoId"] !== previousVideoId) {
       //it has changed
       //ytPlayer.videoId =  channelVideoObject["videoId"];
@@ -89,35 +109,88 @@ Template.video.rendered = function(){
 
 function renderYoutubeScript() {
   //using adrianliaw:youtube-iframe-api
-  var videoPlaying = ChannelsQueue.findOne({});
-  previousVideoId = videoPlaying['videoId'] || null; //look at this
-  onYouTubeIframeAPIReady = function () {
-      ytPlayer = new YT.Player("youtube-player", {
-          height: "390",
-          width: "640",
+  try {
+    var videoPlaying = ChannelsQueue.findOne({});
+    previousVideoId = videoPlaying['videoId']; //look at this
+    onYouTubeIframeAPIReady = function () {
+        ytPlayer = new YT.Player("youtube-player", {
+            height: "390",
+            width: "640",
 
-          videoId: videoPlaying["videoId"],
-          events: {
-              onReady: function (event) {
-                if (videoPlaying['videoState'] === "paused") {
-                  //event.target.pauseVideo();
-                  ytPlayer.seekTo(videoPlaying["currentTime"],true);
-                  ytPlayer.pauseVideo();
-                }
-                else if (videoPlaying["videoState"] === "playing") {
-                  //event.target.playVideo();
-                  ytPlayer.seekTo(videoPlaying["currentTime"],true);
-                  ytPlayer.playVideo();
-                }
-                else {
-                  console.log("Something is messed up!");
-                }
-              },
-          },
-          playerVars: {
-            'controls': 0,
-        }
-      });
-  };
+            videoId: videoPlaying["videoId"],
+            events: {
+                onReady: function (event) {
+                  if (videoPlaying['videoState'] === "paused") {
+                    //event.target.pauseVideo();
+                    try {
+                      ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                      ytPlayer.pauseVideo();
+                    }
+                    catch(e) {
+                      console.log("Unable to get videos current time!");
+                    }
+                  }
+                  else if (videoPlaying["videoState"] === "playing") {
+                    //event.target.playVideo();
+                    try {
+                      ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                      ytPlayer.playVideo();
+                    }
+                    catch(e) {
+                      console.log("Unable to get videos current time!");
+                    }
+                  }
+                  else {
+                    console.log("Something is messed up!");
+                  }
+                },
+            },
+            playerVars: {
+              'controls': 0,
+          }
+        });
+    };
+  }
+  catch(e) {
+    console.log("Unable to get video playing ID");
+    onYouTubeIframeAPIReady = function () {
+        ytPlayer = new YT.Player("youtube-player", {
+            height: "390",
+            width: "640",
+
+            videoId: 0,
+            events: {
+                onReady: function (event) {
+                  if (videoPlaying['videoState'] === "paused") {
+                    //event.target.pauseVideo();
+                    try {
+                      ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                      ytPlayer.pauseVideo();
+                    }
+                    catch(e) {
+                      console.log("Unable to get videos current time!");
+                    }
+                  }
+                  else if (videoPlaying["videoState"] === "playing") {
+                    //event.target.playVideo();
+                    try {
+                      ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                      ytPlayer.playVideo();
+                    }
+                    catch(e) {
+                      console.log("Unable to get videos current time!");
+                    }
+                  }
+                  else {
+                    console.log("Something is messed up!");
+                  }
+                },
+            },
+            playerVars: {
+              'controls': 0,
+          }
+        });
+    };
+  }
   YT.load();
 }

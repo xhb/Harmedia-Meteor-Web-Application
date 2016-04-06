@@ -1,14 +1,25 @@
 [ ] Clean up and comment code
-[ ] Add video sychronization on the server using MapReduce (possibly)
 [ ] Add it so moderators can ban and silence users
 [ ] Add it so channels can be browsed using our browser
-[ ] Add it so users can add tags to their channelPassword
+[ ] Add it so users can add tags to their channel
 [ ] Reorganize code and structure it better
 [ ] Optimize chat so we don't store so much
-[ ] At a dummy user to be the user who sends messages regarding bans, silences, joins, etc (harmedianotify).
+[ ] Add a dummy user to be the user who sends messages regarding bans, silences, joins, etc (harmedianotify).
+[ ] Finish customizing player buttons
 [ ] Handle dealing with channels viewers better
+[ ] Maybe rewrite this completely (Use a more object oriented approach!)
+[ ] Need to make player know when its video changes so it can play a new video (serverside?)
+[ ] Also need to add volume control for player
+[ ] Fix some of the errors that display in console for the player!
+[ ] Look into guarding
+[ ] Make sign up and login pages for non-registered users only
+[ ] Fix username creation
+[ ] When user exits out of the stream with x button it does not make them leave stream
+
+
+
+## Later ##
 [ ] Add vimeo support
 [ ] Add Mp4 support
-[ ] Finish customizing player buttons
-[ ] Maybe rewrite this completely (Use a more object oriented approach!)
+[ ] Add video sychronization on the server using MapReduce (possibly) (NOT ATM!)
 [ ] May want to remove adrianliaw:youtube-iframe-api (??)
