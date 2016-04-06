@@ -36,7 +36,12 @@ Template.player.helpers({
     }
   },
   isGuru: function() {
-    return Channels.findOne()["channelGuru"] === Meteor.user().username;
+    try {
+      return Channels.findOne()["channelGuru"] === Meteor.user().username;
+    }
+    catch(e) {
+      return false;
+    }
   },
   isVideoPaused: function() {
     try {

@@ -71,8 +71,19 @@ Meteor.methods({
     Channels.update({ channelURL: urlHandler }, { $set: { viewerCount: vCount }});
   },
   removeUserFromAllViewerList: function(uname) {
-    ChannelsViewerList.remove({ username: uname });
-    Session.set('currentChannel',null); //find better way of doing this
+    //ChannelsViewerList.remove({ username: uname });
+    var urlHandler = ChannelsViewerList.findOne({username: uname})["roomURLHandler"];
+    console.log(urlHandler);
+    //console.log("Removing user from current channel!");
+    Meteor.call('removeUserFromViewerList',urlHandler, uname, function(error) {
+      if(error) {
+        console.log("Unable to remove user!");
+      }
+      else {
+        console.log("Removed user from channel and updated count!");
+      }
+    }); //removing viewer from the room he/she is in!
+    //Session.set('currentChannel',null); //find better way of doing this
   },
   getChannelPassword: function(url) {
     var obj = Channels.findOne({ channelURL: url });

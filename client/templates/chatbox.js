@@ -8,9 +8,10 @@ Template.chatbox.helpers({
 });
 
 Template.chatbox.events({
+  //could probably optmize
   'submit .chatfield': function(e,t) {
     e.preventDefault();
-    var urlHandler = Session.get("currentChannel");
+    //var urlHandler = Session.get("currentChannel");
     var message = t.find("#channelMessage").value;
     var channelObj = Channels.findOne({});
     var ownerID = channelObj["ownerID"];
@@ -164,5 +165,6 @@ Template.chatbox.events({
         console.log("Error!  May want to dispaly a message!");
       }
     } //end else
+    t.find("#channelMessage").value = "";
   } // function end
 });

@@ -161,28 +161,34 @@ function renderYoutubeScript() {
             videoId: 0,
             events: {
                 onReady: function (event) {
-                  if (videoPlaying['videoState'] === "paused") {
-                    //event.target.pauseVideo();
-                    try {
-                      ytPlayer.seekTo(videoPlaying["currentTime"],true);
-                      ytPlayer.pauseVideo();
+                  try {
+                    if (videoPlaying['videoState'] === "paused") {
+                      //event.target.pauseVideo();
+                      try {
+                        ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                        ytPlayer.pauseVideo();
+                      }
+                      catch(e) {
+                        console.log("Unable to get videos current time!");
+                      }
                     }
-                    catch(e) {
-                      console.log("Unable to get videos current time!");
+                    else if (videoPlaying["videoState"] === "playing") {
+                      //event.target.playVideo();
+                      try {
+                        ytPlayer.seekTo(videoPlaying["currentTime"],true);
+                        ytPlayer.playVideo();
+                      }
+                      catch(e) {
+                        console.log("Unable to get videos current time!");
+                      }
+                    }
+                    else {
+                      console.log("Something is messed up!");
                     }
                   }
-                  else if (videoPlaying["videoState"] === "playing") {
-                    //event.target.playVideo();
-                    try {
-                      ytPlayer.seekTo(videoPlaying["currentTime"],true);
-                      ytPlayer.playVideo();
-                    }
-                    catch(e) {
-                      console.log("Unable to get videos current time!");
-                    }
-                  }
-                  else {
-                    console.log("Something is messed up!");
+                  catch(e) {
+                    console.log("No video playing!");
+                    return;
                   }
                 },
             },

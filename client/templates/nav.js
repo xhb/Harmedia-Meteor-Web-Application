@@ -16,7 +16,7 @@ Template.nav.events({
           }
           else {
             console.log("User successfully removed from all his or her lists!");
-            Session.set('currentChannel',null);
+            //Session.set('currentChannel',null);
             Session.set("ses",false);
             Router.go("/");
           }
