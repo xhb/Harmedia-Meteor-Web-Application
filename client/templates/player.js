@@ -127,6 +127,7 @@ Template.player.events({
   },
   'change #volume-bar': function() {
     var volumeChangeTo = parseInt($('input[id=volume-bar]').val());
+    console.log("Volume changed to " + volumeChangeTo + "!");
     Template.video.__helpers.get('getPlayerObject')().setVolume(volumeChangeTo);
   }
 });

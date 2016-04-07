@@ -104,6 +104,7 @@ Template.video.events({
 Template.video.rendered = function(){
     if (!this.loading) {
       renderYoutubeScript();
+      ytPlayer.setVolume(50); //setting intial vollume to be 50
     }
 
 };
