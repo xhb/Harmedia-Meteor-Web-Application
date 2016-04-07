@@ -15,7 +15,8 @@
 [ ] Make sign up and login pages for non-registered users only
 [ ] Fix username creation
 [ ] When user exits out of the stream with x button it does not make them leave stream
-
+[ ] Look at set volume error when joining a channel
+[ ] Fix channel creation error
 
 
 ## Later ##
