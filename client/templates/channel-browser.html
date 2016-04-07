@@ -1,3 +1,33 @@
-<template name="channelbrowser">
-  <h1>The channel browser will be displayed here</h1>
+<template name="channelBrowser">
+  <select class="form-control" id="searchBy">
+    <option>Owner</option>
+    <option>Tags</option>
+    <option>Topic</option>
+  </select>
+  <input type="text" class="form-control" id="searchInput">
+  <table class="table table-condensed table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Channel URL</th>
+        <th>Channel Topic</th>
+        <th>Current Video</th>
+        <th>Owner</th>
+        <th>Viewer Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each getFilteredChannels}}
+        <tr>
+          <td>{{@index}}</td>
+          <td><a href="/c/{{channelURL}}">{{channelURL}}</a></td>
+          <td>{{channelTopic}}</td>
+          {{getCurrentVideo channelURL}}
+          <td>{{getCurrentVideoSession channelURL}}</td>
+          <td>{{ownerName}}</td>
+          <td>{{viewerCount}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+</table>
 </template>

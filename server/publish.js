@@ -24,7 +24,11 @@ Meteor.publish('getCurrentChannelQueue', function(cURL) {
 });
 
 Meteor.publish('top10Channels', function() {
-  return Channels.find({});
+    return Channels.find({}, {sort: {viewerCount: -1, channelURL: 1}}, {limit: 10}); //look at this
+});
+
+Meteor.publish('getAllChannels', function() {
+  return Channels.find({}); //gets all the channels
 });
 
 

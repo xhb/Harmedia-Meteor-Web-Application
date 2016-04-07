@@ -1,7 +1,7 @@
 var videoSessionList = {};
 Template.homepage.helpers({
   getTop10Channels: function() {
-    return Channels.find({}, {sort: {viewerCount: -1, channelURL: 1}});
+    return Channels.find({});
   },
   getCurrentVideo: function(url) {
     return Meteor.call("getCurrentVideoForURL", url, function(error,result) {
