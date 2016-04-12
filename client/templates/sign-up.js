@@ -37,13 +37,13 @@ Template.signUp.helpers({
 });
 
 function isValid(s,val) {
-    return (val.length >= 6 && validateNoSpaces(s) && validateUsernameLength(s))  ? true: false;
+    return (val.length >= 6 && validateNoSpaces(s) && s.length >= 3)  ? true: false;
 }
 
 
-function validateUsernameLength(s) {
+/*function validateUsernameLength(s) {
   return s.length >= 3;
-}
+}*/
 
 function validateNoSpaces(s) {
   for (var val in s) {

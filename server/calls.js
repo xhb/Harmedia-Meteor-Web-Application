@@ -56,6 +56,7 @@ Meteor.methods({
     ChannelsModList.remove({ user: u }); //deleting them from all viewer list
     ChannelsQueue.remove({ queuedBy: u }); //delete all things they have queued up (May want to remove)
     BannedAndSilenceList.remove({ username: u }); //removing all channels they are banned from
+    Meteor.users.remove({ username: u });//Need to remove from accounts database
   },
   updateChannel: function(urlHandler,topic,password,tags) {
     Channels.update({channelURL: urlHandler }, { $set: {
