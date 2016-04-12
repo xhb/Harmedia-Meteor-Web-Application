@@ -17,7 +17,7 @@ Template.chatbox.helpers({
             if (error) {
               console.log("An error has occured!");
             }
-            else if (result === true) {
+            else if (result) { //checking if user is banned
               var currentTime = new Date();
               var tempBannedObject = BannedAndSilenceList.findOne({ roomURLHandler: url, username: Meteor.user().username, action: a });
               var endTime = tempBannedObject["endTime"];

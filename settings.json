@@ -1,0 +1,7 @@
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL":"mongodb://czirz:baldwin251@ds011800.mlab.com:11800/harmedia-web-application"
+    }
+  }
+}
