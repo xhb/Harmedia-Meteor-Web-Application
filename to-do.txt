@@ -17,6 +17,7 @@
 [ ] When user exits out of the stream with x button it does not make them leave stream
 [ ] Look at set volume error when joining a channel
 [ ] Fix channel creation error
+[ ] Fix postMessage null error message in channel
 
 
 ## Later ##

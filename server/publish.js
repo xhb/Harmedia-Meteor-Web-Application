@@ -31,6 +31,11 @@ Meteor.publish('getAllChannels', function() {
   return Channels.find({}); //gets all the channels
 });
 
+//so I know when I have been banned
+Meteor.publish('getBannedAndSilenceUser', function(cUrl, name) {
+  return BannedAndSilenceList.find({ roomURLHandler: cUrl, username: name });
+});
+
 
 Meteor.setInterval(function() {
   try {

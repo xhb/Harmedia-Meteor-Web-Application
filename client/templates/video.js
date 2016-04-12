@@ -104,7 +104,6 @@ Template.video.events({
 Template.video.rendered = function(){
     if (!this.loading) {
       renderYoutubeScript();
-      ytPlayer.setVolume(50); //setting intial vollume to be 50
     }
 
 };
@@ -124,6 +123,7 @@ function renderYoutubeScript() {
             videoId: videoPlaying["videoId"],
             events: {
                 onReady: function (event) {
+                  ytPlayer.setVolume(50); //setting intial vollume to be 50
                   if (videoPlaying['videoState'] === "paused") {
                     //event.target.pauseVideo();
                     try {

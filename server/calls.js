@@ -195,6 +195,100 @@ Meteor.methods({
     catch(e) {
       return false;
     }
+  },
+  addUserBannedOrSilenced: function(url,name,eTime,a) {
+    try {
+      //find if user already inserted
+      var checkIfAlreadyHere = BannedAndSilenceList.findOne({ roomURLHandler: url, username: name, action: a });
+      //console.log(checkIfAlreadyHere);
+      if (!checkIfAlreadyHere) {
+        //check if it already exist
+        //console.log("Using this case!");
+        BannedAndSilenceList.insert({
+          roomURLHandler: url, //room they are banned in
+          username: name, //user who will be banned
+          endTime: eTime, //when this will ware off
+          action: a //can be ban or silence
+        });
+      }
+      else {
+        BannedAndSilenceList.update({ roomURLHandler: url, username: name }, { $set: { endTime: eTime } }); //updating if already here
+      }
+      return true;
+    }
+    catch(e) {
+      //console.log("Unable to add user to moderated list!");
+      return false;
+    }
+  },
+  unBanOrUnsilence: function(url,name,a) {
+    try {
+      if (a === "silence" || a === "ban") {
+        BannedAndSilenceList.remove({ roomURLHandler: url, username: name, action: a }); //unbanning or unsilencing user
+        return true;
+      }
+      else {
+        console.log("Wrong action inputted!");
+        return false;
+      }
+    }
+    catch(e) {
+      //console.log("Unable to unban that user!");
+      return false;
+    }
+  },
+  isUserBannedOrSilenced: function(url,name,a) {
+    //var info_temp = BannedAndSilenceList.find({ $and: [ {roomURLHandler : url}, {username: name}, {action: a }] }); //getting first item (could remove fetch and indexing)
+    var info = BannedAndSilenceList.findOne({ roomURLHandler : url, username: name, action: a });
+    //console.log(info);
+    //console.log(info.get("_mongo"));
+    //console.log(info.count());
+    try {
+      var eDate = info["endTime"];
+      //console.log(eDate);
+      if (a === "silence" || a === "ban") {
+        if (!info) { //user banned info not found (not going to use .count())
+          return false;
+        }
+        else if (eDate === -1) { //user is permabanned
+          return "permabanned"; //should change to true
+        }
+        else { //user is banned but wanna be sure it hasn't expired
+          var currentDate = new Date();
+          //console.log(currentDate);
+          //console.log(eDate);
+          if (eDate <= currentDate) {
+            //unban user
+            Meteor.call('unBanOrUnsilence', url, name, a, function(error,result) {
+              if (error || !result) {
+                console.log("Unable to unsilence/ban user even though it expired!");
+                return false; //should change back to true
+              }
+              else {
+                console.log("User unsilenced/unbanned since timeout expired!");
+                return false;
+              }
+            });
+          }
+          else {
+            console.log("Has not expired!");
+            return eDate; //user timeout has not expired and still banned (Should change back to true)
+          }
+        }
+      }
+      else {
+        console.log("Wrong action inputed!");
+        return false;
+      }
+    }
+    catch(e) {
+      console.log("No endtime found!");
+      return false;
+    }
+  },
+  isSilenced: function(url,name,a) {
+    //maye move up in the above function at some point
+    return BannedAndSilenceList.findOne({ roomURLHandler : url, username: name, action: a });
   }
   /*updateChannelCurrentTimes: function() {
     ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
