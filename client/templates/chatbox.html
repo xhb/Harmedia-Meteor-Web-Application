@@ -6,23 +6,22 @@
       <li>{{formatTimeStamp timestamp}} - {{senderName}}: {{message}}</li>
     {{/each}}
   </ul>
-  {{#if checkSilenced}}
+  {{#if currentUser}}
       <form class="chatfield">
         <div class="input-group">
-          <input type="text" class="form-control" id="channelDontMessage" placeholder="Sign up/in to send a message! {{getSilencedTime}}" min="1" max="255" disabled>
+          <!-- Maybe have a way for users to know how long they are banned for -->
+          <input type="text" class="form-control" id="channelMessage" placeholder={{getSilencedTime}} min="1" max="255" disabled={{shouldDisable}}>
           <div class="input-group-btn">
-            <button type="submit" id="messageDontSendButton" class="btn btn-default" disabled>Disabled</button>
+            <button type="submit" id="messageSendButton" class="btn btn-default" disabled={{shouldDisable}}>Send Message</button>
           </div>
         </div>
       </form>
   {{else}}
-
     <form class="chatfield">
       <div class="input-group">
-        <!-- Maybe have a way for users to know how long they are banned for -->
-        <input type="text" class="form-control" id="channelMessage" placeholder={{getSilencedTime}} min="1" max="255" disabled={{shouldDisable}}>
+        <input type="text" class="form-control" id="channelDontMessage" placeholder="Sign up/in to send a message! {{getSilencedTime}}" min="1" max="255" disabled>
         <div class="input-group-btn">
-          <button type="submit" id="messageSendButton" class="btn btn-default" disabled={{shouldDisable}}>Send Message</button>
+          <button type="submit" id="messageDontSendButton" class="btn btn-default" disabled>Disabled</button>
         </div>
       </div>
     </form>
