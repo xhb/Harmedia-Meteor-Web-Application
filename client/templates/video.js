@@ -167,7 +167,6 @@ function renderYoutubeScript() {
                 onReady: function (event) {
                   try {
                     if (videoPlaying['videoState'] === "paused") {
-                      //event.target.pauseVideo();
                       try {
                         ytPlayer.seekTo(videoPlaying["currentTime"],true);
                         ytPlayer.pauseVideo();
@@ -177,7 +176,6 @@ function renderYoutubeScript() {
                       }
                     }
                     else if (videoPlaying["videoState"] === "playing") {
-                      //event.target.playVideo();
                       try {
                         ytPlayer.seekTo(videoPlaying["currentTime"],true);
                         ytPlayer.playVideo();

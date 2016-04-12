@@ -9,7 +9,6 @@
   {{#if currentUser}}
       <form class="chatfield">
         <div class="input-group">
-          <!-- Maybe have a way for users to know how long they are banned for -->
           <input type="text" class="form-control" id="channelMessage" placeholder={{getSilencedTime}} min="1" max="255" disabled={{shouldDisable}}>
           <div class="input-group-btn">
             <button type="submit" id="messageSendButton" class="btn btn-default" disabled={{shouldDisable}}>Send Message</button>
@@ -26,5 +25,5 @@
       </div>
     </form>
   {{/if}}
-  <!--<h1>{{getSilencedTime}}</h1>-->
+  
 </template>

@@ -42,6 +42,20 @@ Meteor.methods({
     ChannelsViewerList.remove({ roomURLHandler: cURL.channelURL });
     ChannelsModList.remove({ roomURLHandler: cURL.channelURL });
     ChannelsQueue.remove({ roomURLHandler: cURL.channelURL });
+    BannedAndSilenceList.remove({ roomURLHandler: cURL.channel });
+  },
+  deleteUserAccount: function(u) {
+    var cursor = Channels.find({ ownerName: u });
+    cursor.forEach(function(chan) {
+      //console.log(chan._id);
+      ChannelsQueue.remove({ roomURLHandler: chan.channelURL }); //removing all queues for each of their channels
+    });
+    Channels.remove({ ownerName: u }); //deleting all this users channels
+    ChannelsChat.remove({ senderName: u }); //deleting all this users messages
+    ChannelsViewerList.remove({ username: u }); //deleting them from all mod list
+    ChannelsModList.remove({ user: u }); //deleting them from all viewer list
+    ChannelsQueue.remove({ queuedBy: u }); //delete all things they have queued up (May want to remove)
+    BannedAndSilenceList.remove({ username: u }); //removing all channels they are banned from
   },
   updateChannel: function(urlHandler,topic,password,tags) {
     Channels.update({channelURL: urlHandler }, { $set: {
@@ -203,7 +217,6 @@ Meteor.methods({
       //console.log(checkIfAlreadyHere);
       if (!checkIfAlreadyHere) {
         //check if it already exist
-        //console.log("Using this case!");
         BannedAndSilenceList.insert({
           roomURLHandler: url, //room they are banned in
           username: name, //user who will be banned
@@ -238,11 +251,7 @@ Meteor.methods({
     }
   },
   isUserBannedOrSilenced: function(url,name,a) {
-    //var info_temp = BannedAndSilenceList.find({ $and: [ {roomURLHandler : url}, {username: name}, {action: a }] }); //getting first item (could remove fetch and indexing)
     var info = BannedAndSilenceList.findOne({ roomURLHandler : url, username: name, action: a });
-    //console.log(info);
-    //console.log(info.get("_mongo"));
-    //console.log(info.count());
     try {
       var eDate = info["endTime"];
       //console.log(eDate);
@@ -255,8 +264,6 @@ Meteor.methods({
         }
         else { //user is banned but wanna be sure it hasn't expired
           var currentDate = new Date();
-          //console.log(currentDate);
-          //console.log(eDate);
           if (eDate <= currentDate) {
             //unban user
             Meteor.call('unBanOrUnsilence', url, name, a, function(error,result) {
@@ -272,7 +279,7 @@ Meteor.methods({
           }
           else {
             console.log("Has not expired!");
-            return eDate; //user timeout has not expired and still banned (Should change back to true)
+            return eDate;
           }
         }
       }
@@ -287,11 +294,6 @@ Meteor.methods({
     }
   },
   isSilenced: function(url,name,a) {
-    //maye move up in the above function at some point
     return BannedAndSilenceList.findOne({ roomURLHandler : url, username: name, action: a });
   }
-  /*updateChannelCurrentTimes: function() {
-    ChannelsQueue.update({ $and: [{ $where: "this.currentTime < this.endTime" }, { videoState: { $eq: "playing" }}]}, { $inc: { currentTime: 1  }});
-    return true;
-  }*/
 });

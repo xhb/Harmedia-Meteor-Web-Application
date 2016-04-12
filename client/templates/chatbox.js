@@ -5,9 +5,6 @@ Template.chatbox.helpers({
     formatTimeStamp: function(time) {
       return moment(time).format('hh:mm');
     },
-    /*currentUserInverted: function() {
-      return !Meteor.user();
-    },*/
     checkIfSilencedOrBanned: function(a) { //look at this
       var update = Session.get('update');
       try {
@@ -103,10 +100,6 @@ Template.chatbox.helpers({
         var currentTimeDate = new Date();
         return "You are timed out for " + calculateSecondsBetweenDates(silencedDate, currentTimeDate) + " seconds!";
       }
-      //shouldn't get to this if not logged in
-      /*var currentTimeDate = new Date(); //may need to do this date stuff on the server so time stays consistent
-      var channelURL = Channels.findOne({})["channelURL"]; //should only be subbed to one channel
-      var silenceEndTime = BannedAndSilenceList.findOne({ roomURLHandler: channelURL, username: Meteor.user().username })["endTime"];*/ //should check if user is already banned and just update the time if so (do this in calls.js, so always only one)
     }
 });
 
@@ -412,7 +405,6 @@ Template.chatbox.events({
 
 function calculateSecondsBetweenDates(ds,de) {
   //borrowed logic from: http://stackoverflow.com/questions/2024198/how-many-seconds-between-two-dates
-  //var diff = ds.getTime() - de.getTime();
   if (ds === -1) {
     return "You are permanately banned from this channel!";
   }
@@ -423,17 +415,6 @@ function calculateSecondsBetweenDates(ds,de) {
   }
   return result;
 }
-
-/*function isNumber(num) {
-  //may want to change this
-  num = parseInt(num,10);
-  if (num === parseInt(num, 10)) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}*/
 
 //so i am constantly checking if banned or silenced
 Meteor.setInterval(function() {

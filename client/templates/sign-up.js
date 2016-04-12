@@ -6,8 +6,6 @@ Template.signUp.events({
     var tempPassword = t.find('#inputPassword').value;
 
     var username = tempUsername.trim();
-    //console.log(username);
-    //console.log(validateNoSpaces(username));
     var email = tempEmail.trim();
     var password = tempPassword.trim();
     if (isValid(username,password)) {
@@ -39,12 +37,13 @@ Template.signUp.helpers({
 });
 
 function isValid(s,val) {
-    return (val.length >= 6 && validateNoSpaces(s))  ? true: false;
+    return (val.length >= 6 && validateNoSpaces(s) && validateUsernameLength(s))  ? true: false;
 }
 
-/*function print(val) {
-  console.log(val);
-}*/
+
+function validateUsernameLength(s) {
+  return s.length >= 3;
+}
 
 function validateNoSpaces(s) {
   for (var val in s) {
