@@ -1,3 +1,4 @@
+Session.set('isInvalidChannelInput',null); //maybe remove
 Template.editChannelPage.events({
   'submit #channelUpdateForm': function(e,t) {
     e.preventDefault();
@@ -30,12 +31,14 @@ function doUpdate(t,urlHandler,topic,password,tags) {
     }
     else {
       Session.set('isInvalidChannelInput',null);
-      t.find('#inputTopic').value = "";
-      t.find('#inputPassword').value = "";
+      //t.find('#inputTopic').value = "";
+      //t.find('#inputPassword').value = "";
       //t.find('#taggle-tags').value = "";
 
       console.log("Success!");
-      Router.go('/mychannels');
+      //Router.go('/mychannels');
+      alert("Updated successfully!");
+      //Router.go('/c/' + urlHandler + '/edit');
     }
   });
 }

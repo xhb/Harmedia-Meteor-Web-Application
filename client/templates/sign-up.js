@@ -1,3 +1,4 @@
+Session.set('isInvalidChannelInput',null); //maybe remove
 Template.signUp.events({
   'submit #sign-up-form': function(e,t) {
     e.preventDefault();
@@ -6,6 +7,8 @@ Template.signUp.events({
     var tempPassword = t.find('#inputPassword').value;
 
     var username = tempUsername.trim();
+    //lower casing username
+    username = username.toLowerCase();
     var email = tempEmail.trim();
     var password = tempPassword.trim();
     if (isValid(username,password)) {

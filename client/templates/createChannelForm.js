@@ -1,3 +1,4 @@
+Session.set('isInvalidChannelInput',null); //maybe remove
 Template.createChannelForm.events({
   'submit #channelCreateForm': function(e,t) {
     e.preventDefault();

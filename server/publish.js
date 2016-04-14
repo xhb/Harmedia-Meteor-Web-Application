@@ -36,6 +36,10 @@ Meteor.publish('getBannedAndSilenceUser', function(cUrl, name) {
   return BannedAndSilenceList.find({ roomURLHandler: cUrl, username: name });
 });
 
+Meteor.publish('getEmoticonList', function(cURL) {
+  return ChannelEmotes.find({ roomURLHandler: cURL });
+});
+
 
 Meteor.setInterval(function() {
   try {

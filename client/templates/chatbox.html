@@ -3,7 +3,15 @@
   {{checkIfSilencedOrBanned "silence"}}
   <ul class="chatbox">
     {{#each chatMessage}}
-      <li>{{formatTimeStamp timestamp}} - {{senderName}}: {{message}}</li>
+      <li>{{formatTimeStamp timestamp}} - {{senderName}}:
+      {{#each messageInChat message}}
+        {{#if doesEmoteExist this}}
+          <img src="{{parseMessageForEmotesUrl this}}" alt="{{parseMessageForEmotesAlt this}}" width="22" height="22"> <!-- 22x22 seems to be preferred size -->
+        {{else}}
+          {{this}}
+        {{/if}}
+      {{/each}}
+      </li>
     {{/each}}
   </ul>
   {{#if currentUser}}
@@ -18,12 +26,12 @@
   {{else}}
     <form class="chatfield">
       <div class="input-group">
-        <input type="text" class="form-control" id="channelDontMessage" placeholder="Sign up/in to send a message! {{getSilencedTime}}" min="1" max="255" disabled>
+        <input type="text" class="form-control" id="channelDontMessage" placeholder="Sign up/in to send a message!" min="1" max="255" disabled>
         <div class="input-group-btn">
           <button type="submit" id="messageDontSendButton" class="btn btn-default" disabled>Disabled</button>
         </div>
       </div>
     </form>
   {{/if}}
-  
+
 </template>

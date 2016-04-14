@@ -2,10 +2,47 @@ Template.chatbox.helpers({
     chatMessage: function() {
       return ChannelsChat.find({});
     },
+    messageInChat: function(message) {
+      return message.split(" ");
+    },
     formatTimeStamp: function(time) {
       return moment(time).format('hh:mm');
     },
-    checkIfSilencedOrBanned: function(a) { //look at this
+    doesEmoteExist: function(m) {
+      //may be a better way to do it
+      //begin adding emoticons here!
+      try {
+        var e = ChannelEmotes.findOne({ eText: m });
+        if (e) {
+          return true;
+        }
+        else {
+          return false; //do nothing
+        }
+      }
+      catch(e) {
+        return false;
+      }
+    },
+    parseMessageForEmotesUrl: function(m) {
+      var e = ChannelEmotes.findOne({ eText: m });
+      if (e) {
+        return e["url"];
+      }
+      else {
+        return false; //do nothing
+      }
+    },
+    parseMessageForEmotesAlt: function(m) {
+      var e = ChannelEmotes.findOne({ eText: m });
+      if (e) {
+        return e["alt"];
+      }
+      else {
+        return false; //do nothing
+      }
+    },
+    checkIfSilencedOrBanned: function(a) {
       var update = Session.get('update');
       try {
         var url = Channels.findOne({})["channelURL"];
@@ -61,29 +98,6 @@ Template.chatbox.helpers({
         return;
       }
     },
-    /*checkSilenced: function() {
-      try {
-        var testing = Session.get('testing');
-        var url = Channels.findOne({})["channelURL"];
-        Meteor.call('isSilenced', url, Meteor.user().username, "silence", function(error,result) {
-        if (error) {
-          console.log("An error has occured!");
-          return;
-        }
-        else if (result) {
-          //var tempBannedObject = BannedAndSilenceList.findOne({ roomURLHandler: url, username: Meteor.user().username, action: a });
-          console.log("Should be true!");
-          return false;
-        }
-        else {
-          //console.log("You are not silenced!");
-          console.log("Should be false!");
-          return result;
-      catch(e) {
-        console.log("An error has occured!");
-        return;
-      }
-  },*/
     shouldDisable: function() {
       return Session.get("isDisabled");
     },
@@ -115,7 +129,7 @@ Template.chatbox.events({
     if (message[0] === "/" && ownerID === Meteor.userId()) {
       var splitMessage = message.split(" ");
       if (splitMessage[0] === "/mod" && splitMessage.length === 2) {
-        var toModUser = splitMessage[1];
+        var toModUser = splitMessage[1]; //may want to cast all these to lowercase
         if (toModUser === Meteor.user().username) {
           console.log("You cannot mod yourself silly!");
           t.find("#channelMessage").value = "";
@@ -338,7 +352,7 @@ Template.chatbox.events({
         console.log("You used the wrong command!");
         t.find("#channelMessage").value = "";
         return;
-      } //end of used the wrong command for owner
+      } //end of used the wrongparseMessageForEmotes command for owner
       t.find("#channelMessage").value = "";
     } //end of '/' and if they are owner case to check for commands
     else if (message[0] === "/" && isUserMod) {

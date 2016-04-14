@@ -22,4 +22,5 @@ Template.displayUsersChannels.events({
       console.log("Not deleting your channel!");
     }
   }
+  //
 });

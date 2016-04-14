@@ -1,3 +1,4 @@
+Session.set('isInvalidChannelInput',null); //maybe remove
 Template.loginForm.events({
   'submit #login-Form': function(e,t) {
     e.preventDefault();

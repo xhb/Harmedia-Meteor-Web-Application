@@ -43,12 +43,15 @@ Meteor.methods({
     ChannelsModList.remove({ roomURLHandler: cURL.channelURL });
     ChannelsQueue.remove({ roomURLHandler: cURL.channelURL });
     BannedAndSilenceList.remove({ roomURLHandler: cURL.channel });
+    ChannelEmotes.remove({ roomURLHandler: cURL.channel }); //removing all channel emotes
+    //going to need to delete emotes here
   },
   deleteUserAccount: function(u) {
     var cursor = Channels.find({ ownerName: u });
     cursor.forEach(function(chan) {
       //console.log(chan._id);
       ChannelsQueue.remove({ roomURLHandler: chan.channelURL }); //removing all queues for each of their channels
+      ChannelEmotes.remove({ roomURLHandler: chan.channelURL }); //removing all emotes for each of their channels
     });
     Channels.remove({ ownerName: u }); //deleting all this users channels
     ChannelsChat.remove({ senderName: u }); //deleting all this users messages
@@ -57,6 +60,7 @@ Meteor.methods({
     ChannelsQueue.remove({ queuedBy: u }); //delete all things they have queued up (May want to remove)
     BannedAndSilenceList.remove({ username: u }); //removing all channels they are banned from
     Meteor.users.remove({ username: u });//Need to remove from accounts database
+    //going to need to delete emotes here
   },
   updateChannel: function(urlHandler,topic,password,tags) {
     Channels.update({channelURL: urlHandler }, { $set: {
@@ -67,23 +71,33 @@ Meteor.methods({
     }});
   },
   insertUserIntoViewerList: function(urlHandler) {
-    var isThere = ChannelsViewerList.findOne({ username: Meteor.user().username });
-    if (isThere) {
-      console.log("User already found in list! Removing user to be readded!");
-      ChannelsViewerList.remove({ username: Meteor.user().username });
-      Channels.update({ channelURL: urlHandler }, { $inc: { viewerCount: -1 }});
+    try {
+      var isThere = ChannelsViewerList.findOne({ username: Meteor.user().username });
+      if (isThere) {
+        console.log("User already found in list! Removing user to be readded!");
+        ChannelsViewerList.remove({ username: Meteor.user().username });
+        Channels.update({ channelURL: urlHandler }, { $inc: { viewerCount: -1 }});
+      }
+      ChannelsViewerList.insert({
+        username: Meteor.user().username,
+        roomURLHandler: urlHandler
+      });
+      var vCount = ChannelsViewerList.find({ roomURLHandler: urlHandler }).count();
+      Channels.update({ channelURL: urlHandler }, { $set: { viewerCount: vCount }});
     }
-    ChannelsViewerList.insert({
-      username: Meteor.user().username,
-      roomURLHandler: urlHandler
-    });
-    var vCount = ChannelsViewerList.find({ roomURLHandler: urlHandler }).count();
-    Channels.update({ channelURL: urlHandler }, { $set: { viewerCount: vCount }});
+    catch(e){
+      console.log("Unable to add user to viewer list!");
+    }
   },
   removeUserFromViewerList: function(urlHandler, uname) {
-    ChannelsViewerList.remove({ roomURLHandler: urlHandler,username: uname });
-    var vCount = ChannelsViewerList.find({ roomURLHandler: urlHandler }).count();
-    Channels.update({ channelURL: urlHandler }, { $set: { viewerCount: vCount }});
+    try {
+      ChannelsViewerList.remove({ roomURLHandler: urlHandler,username: uname });
+      var vCount = ChannelsViewerList.find({ roomURLHandler: urlHandler }).count();
+      Channels.update({ channelURL: urlHandler }, { $set: { viewerCount: vCount }});
+    }
+    catch(e) {
+      console.log("Unable to remove user from viewerlist");
+    }
   },
   removeUserFromAllViewerList: function(uname) {
     //ChannelsViewerList.remove({ username: uname });
@@ -296,5 +310,30 @@ Meteor.methods({
   },
   isSilenced: function(url,name,a) {
     return BannedAndSilenceList.findOne({ roomURLHandler : url, username: name, action: a });
+  },
+  createEmoticon: function(roomURL, text, u, a) {
+    //creating emoticons
+    try {
+      ChannelEmotes.insert({
+        roomURLHandler: roomURL,
+        eText: text,
+        url: u,
+        alt: a, //just in case we wanna do alt different
+        uploader: Meteor.user().username //who uploaded it username
+      });
+      return true;
+    }
+    catch(e) {
+      return false;
+    }
+  },
+  deleteEmoticon: function(e_this) {
+    //deleting emoticons
+    try {
+      ChannelEmotes.remove({ _id: e_this });
+    }
+    catch(e) {
+      return false;
+    }
   }
 });

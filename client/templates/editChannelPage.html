@@ -31,10 +31,12 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8" style="text-align: right;">
             <button type="submit" class="btn btn-default">Save</button>
-            <a href="/mychannels" class="btn btn-primary">Cancel</a>
+            <!-- <a href="/mychannels" class="btn btn-primary">Cancel</a>-->
           </div>
         </div>
       </form>
+      {{> emoticonsEditor}}
+      <a href="/mychannels" class="btn btn-primary"> &lt;&lt;Back to my channels!</a>
     {{else}}
       <div class="alert alert-danger" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

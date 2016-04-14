@@ -1,0 +1,41 @@
+<template name="emoticonsEditor">
+  <h2>Emoticon Editor Area</h2>
+  <form id="createEmoticon" class="form-horizontal collapse navbar-collapse">
+    <div class="form-group">
+      <label for="inputImageURL" class="col-sm-2 control-label"></label>
+      <div class="col-sm-12">
+        <input type="text" class="form-control" id="inputImageURL" placeholder="Insert image URL!" min="1" max="255" required="required"> <!-- Only imgur for now -->
+      </div>
+      <label for="inputImageText" class="col-sm-2 control-label"></label>
+      <div class="col-sm-12">
+        <input type="text" class="form-control" id="inputImageText" placeholder="Insert emote text identifer (no spaces)" min="2" max="10" required="required"> <!-- Only imgur for now -->
+      </div>
+      <div class="col-sm-12">
+        <input id="submitEmoticonButton" class="btn btn-default" type="submit" value="Add Emote">
+      </div>
+    </div>
+  </form>
+  <!-- Show all emoticons and have button to delete them!-->
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>URL Handler (Unique)</th>
+        <th>Text</th>
+        <th>Image 22x22</th>
+        <th>Uploader</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each emoticonRow}}
+        <tr>
+          <th>{{roomURLHandler}}</th>
+          <th>{{eText}}</th>
+          <th><img src="{{url}}" alt="{{alt}}" width="22" height="22"/></th>
+          <th>{{uploader}}</th>
+          <th><a type="button" id="deleteEmot iconButton" class="btn btn-danger">X</a></th>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>
