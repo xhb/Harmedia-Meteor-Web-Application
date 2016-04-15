@@ -54,6 +54,17 @@ Template.player.helpers({
   },
   canSkip: function() {
     return true;
+  },
+  isNoVideoDisableButton: function() {
+    //console.log("Nice bro!");
+    //Session.get('update');
+    var q = ChannelsQueue.findOne({});
+    if (q) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 });
 
@@ -110,7 +121,7 @@ Template.player.events({
   //maybe can remove the e (event)
   'change #seek-bar': function(e,t) {
     //console.log(e.target);
-    //return;;
+    //return;
     //console.log(e.target);
     var channelObject = Channels.findOne({});
     var url = channelObject["channelURL"];

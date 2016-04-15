@@ -2,14 +2,22 @@
   {{> video}}
   {{#if isGuru}}
     <input id="seek-bar" class="seek-bar-class" type="range" value="{{getCurrentChannelTime}}" min="0" max="{{getEndChannelTime}}">
-    {{#if isVideoPaused}}
-      <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-play"></span></button>
-    {{else}}
-      <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-pause"></span></button>
-    {{/if}}
+    {{#if isNoVideoDisableButton}}
+        <button id="play-pause-button" disabled><span id="togglePlause" class="glyphicon glyphicon-play"></span></button>
+      {{else}}
+        {{#if isVideoPaused}}
+          <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-play"></span></button>
+        {{else}}
+          <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-pause"></span></button>
+        {{/if}}
+      {{/if}}
   {{/if}}
   {{#if canSkip}}
-    <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button> <!-- Owners, Mods, Gurus have ability to skip -->
+    {{#if isNoVideoDisableButton}}
+      <button id="skip-button" disabled><span class="glyphicon glyphicon-step-forward"></span></button> <!-- Owners, Mods, Gurus have ability to skip -->
+    {{else}}
+      <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button>
+    {{/if}}
   {{/if}}
   <input id="volume-bar" class="volume-bar-class" type="range" value="50" min="0" max="100">
   <h1>Current Video Server Time: {{formatCurrentTime getCurrentChannelTime}}/{{formatCurrentTime getEndChannelTime}}</h1>
