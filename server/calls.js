@@ -336,4 +336,19 @@ Meteor.methods({
       return false;
     }
   }
+  /*isMyChannel: function(un,url) {
+    try {
+      var c = Channels.findOne({ channelURL: url });
+      if (c["ownerName"] === un) {
+        //User can view this page to edit it
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    catch(e) {
+      return false;
+    }
+  }*/
 });

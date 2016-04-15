@@ -49,6 +49,16 @@ Template.editChannelPage.helpers({
   },
   destroyed: function() {
     Session.set('isInvalidChannelInput',null);
+  },
+  isMyChannel: function(un) {
+    if (un === Meteor.user().username) {
+      return;
+    }
+    else {
+      alert("Nice try, but you do not own this channel!");
+      console.log("Nice try, but you do not own this channel!");
+      Router.go("/");
+    }
   }
 });
 

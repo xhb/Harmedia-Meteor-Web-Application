@@ -1,4 +1,5 @@
 <template name="editChannelPage">
+  {{isMyChannel channel.ownerName}}
   {{#if channel}}
     {{#if isInvalidChannelInput}}
       <div class="alert alert-danger" role="alert">
