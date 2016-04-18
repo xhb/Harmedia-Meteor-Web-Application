@@ -387,6 +387,160 @@ Template.chatbox.events({
           }
         });
       }// end of mod unguru setting
+      else if (splitMessage[0] === "/ban" && splitMessage.length === 3) {
+        var time = splitMessage[2];
+        var user = splitMessage[1];
+        var channelObj = Channels.findOne({});
+        var modObj = ChannelsModList.findOne({ user: user });
+        if (user === Meteor.user().username) {
+          console.log("You cannot ban yourself silly!");
+        }
+        else if (user === channelObj["ownerName"]) {
+          alert("You cannot ban the owner!");
+          console.log("You cannot ban the owner of the channel!");
+        }
+        else if (modObj) {
+          alert("You cannot ban other mods!");
+          console.log("You cannot ban other mods!");
+        }
+        else if (time < -1 || time > 604800) { //checking bounds (No more than a week of ban)
+          alert("Invalid time entered.  Please insert time between -1 and 604800 (1 week) (inclusive)");
+        }
+        //mods will have a check to ensure they cannot ban other mods
+        else {
+          Meteor.call("findUser", user, function(error,result) {
+            if (error || !result) {
+              console.log("User was not found!");
+            }
+            else {
+              /*var timeToBan = new Date();
+              console.log(time);
+              console.log(timeToBan);*/
+              if (time == -1) { //may want to change later
+                timeToBan = -1;
+                console.log("Permabanning the user!");
+              }
+              else {
+                var timeObject = new Date();
+                console.log(timeObject);
+                var timeToBan = new Date(timeObject .getTime() + 1000*time);
+                console.log(timeToBan);
+              }
+              Meteor.call('addUserBannedOrSilenced', channelObj["channelURL"], user, timeToBan, "ban", function(error,result) {
+                if (error || !result) {
+                  console.log("Was not able to ban user!");
+                }
+                else {
+                  console.log("We just banned " + user + " in channel " + channelObj["channelURL"] + " for " + time + " seconds!");
+                }
+              });
+            }
+          });
+        }
+      } //end of ban user for moderator
+      else if (splitMessage[0] === "/unban" && splitMessage.length === 2) {
+        //var time = splitMessage[2];
+        var user = splitMessage[1];
+        /*var channelObj = Channels.findOne({});
+        var modObj = ChannelsModList.findOne({ user: user });*/
+        if (user === Meteor.user().username) {
+          console.log("You cannot unban yourself silly!");
+        }
+        /*else if (user === channelObj["ownerName"]) {
+          alert("You cannot ban the owner!");
+          console.log("You cannot unban the owner of the channel!");
+        }
+        else if (modObj) {
+          alert("You cannot ban other mods!");
+          console.log("You cannot unban other mods!");
+        }*/
+        else {
+          Meteor.call("findUser", user, function(error,result) {
+            if (error || !result) {
+              console.log("User was not found!");
+            }
+            else {
+              var timeToBan = new Date() + time;
+              Meteor.call('unBanOrUnsilence', channelObj["channelURL"], user, "ban", function(error,result) {
+                if (error || !result) {
+                  console.log("Was not able to unban user!");
+                }
+                else {
+                  console.log("We just unbanned " + user + " in channel " + channelObj["channelURL"] + "!");
+                }
+              });
+            }
+          });
+        }
+      } //end of unban user for moderator
+      else if (splitMessage[0] === "/silence" && splitMessage.length === 3) {
+        var time = splitMessage[2];
+        var user = splitMessage[1];
+        var channelObj = Channels.findOne({});
+        var modObj = ChannelsModList.findOne({ user: user });
+        if (user === Meteor.user().username) {
+          console.log("You cannot silence yourself silly!");
+        }
+        else if (user === channelObj["ownerName"]) {
+          alert("You cannot silence the owner!");
+          console.log("You cannot silence the owner of the channel!");
+        }
+        else if (modObj) {
+          alert("You cannot silence other mods!");
+          console.log("You cannot silence other mods!");
+        }
+        else if (time < 0 || time > 604800) { //checking bounds (No more than a week of ban)
+          alert("Invalid time entered.  Please insert time between 1 and 604800 (1 week) (inclusive)");
+        }
+        //mods will have a check to ensure they cannot ban other mods
+        else {
+          Meteor.call("findUser", user, function(error,result) {
+            if (error || !result) {
+              console.log("User was not found!");
+            }
+            //mods shouldn't be able to silence other mods (This is owner however)
+            else {
+                var timeObject = new Date();
+                console.log(timeObject);
+                var timeToBan = new Date(timeObject .getTime() + 1000*time);
+                console.log(timeToBan);
+              Meteor.call('addUserBannedOrSilenced', channelObj["channelURL"], user, timeToBan, "silence", function(error,result) {
+                if (error || !result) {
+                  console.log("Was not able to silence user!");
+                }
+                else {
+                  console.log("We just silenced " + user + " in channel " + channelObj["channelURL"] + " for " + time + " seconds!");
+                }
+              });
+            }
+          });
+        }
+      }//end of silence user moderator
+      else if (splitMessage[0] === "/unsilence" && splitMessage.length === 2) {
+        //var time = splitMessage[2];
+        var user = splitMessage[1];
+        if (user === Meteor.user().username) {
+          console.log("You cannot unsilence yourself silly!");
+        }
+        else {
+          Meteor.call("findUser", user, function(error,result) {
+            if (error || !result) {
+              console.log("User was not found!");
+            }
+            else {
+              var timeToBan = new Date() + time;
+              Meteor.call('unBanOrUnsilence', channelObj["channelURL"], user, "silence", function(error,result) {
+                if (error || !result) {
+                  console.log("Was not able to unsilence user!");
+                }
+                else {
+                  console.log("We just unsilenced " + user + " in channel " + channelObj["channelURL"] + "!");
+                }
+              });
+            }
+          });
+        }
+      } //end of unsilence user moderator
       else {
         console.log("You used the wrong command!");
         t.find("#channelMessage").value = "";

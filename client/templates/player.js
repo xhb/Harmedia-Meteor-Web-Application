@@ -53,7 +53,16 @@ Template.player.helpers({
     }
   },
   canSkip: function() {
-    return true;
+    try {
+      var u = Meteor.user().username;
+      var modObject = ChannelsModList.findOne({ user: u });
+      var channelObject = Channels.findOne({});
+      return channelObject["ownerName"] === u || channelObject["channelGuru"] === u || modObject;
+    }
+    catch(e) {
+      console.log("You are not able to skip the video!");
+      return false;
+    }
   },
   isNoVideoDisableButton: function() {
     //console.log("Nice bro!");
@@ -155,3 +164,7 @@ function secondsToHoursMin(secs) {
   minutes = minutes%60;
   return pad(hours)+":"+pad(minutes)+":"+pad(secs);
 }
+
+/*function isInArray(array,value) {
+    return array.indexOf(value) > -1;
+}*/
