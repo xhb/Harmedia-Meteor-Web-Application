@@ -1,24 +1,36 @@
 <template  name="player">
   {{> video}}
-  {{#if isGuru}}
-    <input id="seek-bar" class="seek-bar-class" type="range" value="{{getCurrentChannelTime}}" min="0" max="{{getEndChannelTime}}">
-    {{#if isNoVideoDisableButton}}
-        <button id="play-pause-button" disabled><span id="togglePlause" class="glyphicon glyphicon-play"></span></button>
-      {{else}}
-        {{#if isVideoPaused}}
-          <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-play"></span></button>
+  <div class="row" style="margin-top:5px">
+    {{#if isGuru}}
+      <div class="col-md-2 col-margin-right-reduced">
+      {{#if isNoVideoDisableButton}}
+          <button id="play-pause-button" disabled><span id="togglePlause" class="glyphicon glyphicon-play"></span></button>
         {{else}}
-          <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-pause"></span></button>
+          {{#if isVideoPaused}}
+            <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-play"></span></button>
+          {{else}}
+            <button id="play-pause-button"><span id="togglePlause" class="glyphicon glyphicon-pause"></span></button>
+          {{/if}}
+        {{/if}}
+      {{#if canSkip}}
+        {{#if isNoVideoDisableButton}}
+          <button id="skip-button" disabled><span class="glyphicon glyphicon-step-forward"></span></button>
+        {{else}}
+          <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button>
         {{/if}}
       {{/if}}
-  {{/if}}
-  {{#if canSkip}}
-    {{#if isNoVideoDisableButton}}
-      <button id="skip-button" disabled><span class="glyphicon glyphicon-step-forward"></span></button> <!-- Owners, Mods, Gurus have ability to skip -->
-    {{else}}
-      <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button>
+      </div>
+      <div class="col-md-2"> <p id="server-video-time" class="main-font-color">{{formatCurrentTime getCurrentChannelTime}}/{{formatCurrentTime getEndChannelTime}}</p> </div>
+      <div class="col-md-6">
+        <input id="seek-bar" class="seek-bar-class" type="range" value="{{getCurrentChannelTime}}" min="0" max="{{getEndChannelTime}}">
+      </div>
+      {{else}}
+        <div class="col-md-2">
+          <p id="server-video-time" class="main-font-color">{{formatCurrentTime getCurrentChannelTime}}/{{formatCurrentTime getEndChannelTime}}</p>
+        </div>
     {{/if}}
-  {{/if}}
-  <input id="volume-bar" class="volume-bar-class" type="range" value="50" min="0" max="100">
-  <h1>Current Video Server Time: {{formatCurrentTime getCurrentChannelTime}}/{{formatCurrentTime getEndChannelTime}}</h1>
+    <div class="col-md-2 f-right">
+      <input id="volume-bar" class="volume-bar-class" type="range" value="50" min="0" max="100">
+    </div>
+  </div>
 </template>

@@ -1,9 +1,9 @@
 <template name="chatbox">
   {{checkIfSilencedOrBanned "ban"}}
   {{checkIfSilencedOrBanned "silence"}}
-  <ul class="chatbox">
+  <ul class="chatbox border-3d main-font-color">
     {{#each chatMessage}}
-      <li>{{formatTimeStamp timestamp}} - {{senderName}}:
+      <li>{{formatTimeStamp timestamp}} - <span class="{{ isGuru senderName }}"><span class="text-bold {{ getTextColor senderName }}">{{senderName}}</span></span>:
       {{#each messageInChat message}}
         {{#if doesEmoteExist this}}
           <img src="{{parseMessageForEmotesUrl this}}" alt="{{parseMessageForEmotesAlt this}}" width="22" height="22"> <!-- 22x22 seems to be preferred size -->
@@ -19,7 +19,7 @@
         <div class="input-group">
           <input type="text" class="form-control" id="channelMessage" placeholder={{getSilencedTime}} min="1" max="255" disabled={{shouldDisable}}>
           <div class="input-group-btn">
-            <button type="submit" id="messageSendButton" class="btn btn-default" disabled={{shouldDisable}}>Send Message</button>
+            <button type="submit" id="messageSendButton" class="btn btn-default chat-button" disabled={{shouldDisable}}>Send Message</button>
           </div>
         </div>
       </form>
@@ -28,10 +28,9 @@
       <div class="input-group">
         <input type="text" class="form-control" id="channelDontMessage" placeholder="Sign up/in to send a message!" min="1" max="255" disabled>
         <div class="input-group-btn">
-          <button type="submit" id="messageDontSendButton" class="btn btn-default" disabled>Disabled</button>
+          <button type="submit" id="messageDontSendButton" class="btn btn-default chat-button" disabled>Disabled</button>
         </div>
       </div>
     </form>
   {{/if}}
-
 </template>

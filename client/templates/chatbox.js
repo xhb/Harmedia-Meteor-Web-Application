@@ -114,6 +114,20 @@ Template.chatbox.helpers({
         var currentTimeDate = new Date();
         return "You are timed out for " + calculateSecondsBetweenDates(silencedDate, currentTimeDate) + " seconds!";
       }
+    },
+    getTextColor: function(username) {
+      var channelObj = Channels.findOne({});
+      var roomURL = channelObj["channelURL"];
+      var ownerName = channelObj["ownerName"];
+      var userLevel = ownerName === username ? "text-owner": null
+                    || ChannelsModList.findOne({ roomURLHandler: roomURL, user: username }) ? "text-mod": null
+                    || username !== undefined ? "text-user": "";
+      return userLevel;
+    },
+    isGuru: function(username) {
+      var channelObj = Channels.findOne({});
+      var isGuru = channelObj["channelGuru"] === username ? "text-guru" : "";
+      return isGuru;
     }
 });
 
@@ -579,13 +593,23 @@ function calculateSecondsBetweenDates(ds,de) {
   else {
     var diff = ds - de;
     var difference_between_two = diff / 1000;
-    var result = Math.abs(difference_between_two) + " seconds!";
+    var result = Math.abs(difference_between_two);
   }
   return result;
 }
+
+/* Put here because do not want it to load this script on every  page since it is only used here */
+/* Borrowed from here: http://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up */
+function updateScroll(){
+    var element = document.getElementsByClassName("chatbox")[0];
+    //console.log(element);
+    element.scrollTop = element.scrollHeight;
+}
+
 
 //so i am constantly checking if banned or silenced
 Meteor.setInterval(function() {
   Session.set('update',Math.random());
   //Template.chatbox.__helpers.get('getSilencedTime')();
+  updateScroll();
 },1000); //may not want to use this

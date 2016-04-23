@@ -1,14 +1,30 @@
 <template name="channelPage">
   {{#if channel}}
-    <div class="c_center">
-      <h2> {{channel.channelTopic}} </h2>
-      <p>Owner: {{channel.ownerName}}</p>
-      <p>Viewer Count: {{channel.viewerCount}}</p>
+    <div class="c_center main-font-color">
+      <h2> {{channel.channelTopic}} || {{channel.ownerName}} <span class="glyphicon glyphicon-user"><span class="viewer-count-text">{{channel.viewerCount}}</span></span> </h2>
     </div>
-    {{> chatbox }}
-    {{> channelViewerList}}
-    {{> player}}
-    {{> videoQueue}}
+    <div class="row">
+      <div class="col-md-8 col-margin-right-reduced">
+        {{> player}}
+        {{> videoQueue}}
+      </div>
+      <div class="col-md-4">
+          <ul class="nav nav-tabs nav-justified" style="border: none;">
+            <li class="active"><a data-toggle="tab" href="#chatboxTab">Chat</a></li>
+            <li><a data-toggle="tab" href="#viewerlistTab">Viewerlist</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="chatboxTab" class="tab-pane active">
+              {{> chatbox }}
+            </div>
+            <div id="viewerlistTab" class="tab-pane">
+              {{> channelViewerList}}
+            </div>
+          </div>
+
+
+      </div>
+    </div>
   {{else}}
     <div class="alert alert-danger" role="alert">
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

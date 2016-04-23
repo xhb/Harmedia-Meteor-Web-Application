@@ -1,11 +1,10 @@
 <template name="channelViewerList">
-  <h3> Viewerlist </h3>
-  <ul class="viewerList">
+  <ul class="viewerList border-3d main-font-color">
     {{#each getViewerList}}
-      {{#if userIsGuru username}} 
-        <li class="user {{userIsOwner username}} {{userIsMod username}}"><span class="glyphicon glyphicon-fire"></span> {{username}}</li>
+      {{#if userIsGuru username}}
+        <li class="text-user {{userIsOwner username}} {{userIsMod username}}"><span class="glyphicon glyphicon-fire"></span> {{username}}</li>
       {{else}}
-        <li class="user {{userIsOwner username}} {{userIsMod username}}">{{username}}</li>
+        <li class="text-user {{userIsOwner username}} {{userIsMod username}}">{{username}}</li>
       {{/if}}
     {{/each}}
   </ul>
