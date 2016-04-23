@@ -24,11 +24,18 @@
       <div class="col-md-6">
         <input id="seek-bar" class="seek-bar-class" type="range" value="{{getCurrentChannelTime}}" min="0" max="{{getEndChannelTime}}">
       </div>
-      {{else}}
-        <div class="col-md-2">
-          <p id="server-video-time" class="main-font-color">{{formatCurrentTime getCurrentChannelTime}}/{{formatCurrentTime getEndChannelTime}}</p>
-        </div>
+    {{else}}
+      {{#if canSkip}}
+        {{#if isNoVideoDisableButton}}
+          <button id="skip-button" disabled><span class="glyphicon glyphicon-step-forward"></span></button>
+        {{else}}
+          <button id="skip-button"><span class="glyphicon glyphicon-step-forward"></span></button>
+        {{/if}}
+      {{/if}}
     {{/if}}
+    <div class="col-md-2">
+      <p id="server-video-time" class="main-font-color">{{formatCurrentTime getCurrentChannelTime}}/{{formatCurrentTime getEndChannelTime}}</p>
+    </div>
     <div class="col-md-2 f-right">
       <input id="volume-bar" class="volume-bar-class" type="range" value="50" min="0" max="100">
     </div>
