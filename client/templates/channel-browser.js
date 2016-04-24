@@ -30,6 +30,9 @@ Template.channelBrowser.helpers({
     }
     //return;
   },
+  incCount: (count) => {
+    return count+1;
+  },
   getCurrentVideo: function(url) {
     return Meteor.call("getCurrentVideoForURL", url, function(error,result) {
       if (error || !result) {

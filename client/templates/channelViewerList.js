@@ -19,7 +19,10 @@ Template.channelViewerList.helpers({
   userIsGuru: function(name) {
     var channelObj = Channels.findOne({});
     if (name === channelObj["channelGuru"]) {
-      return "channel-guru";
+      return "channel-guru"; 
     }
+  },
+  isMe: (user) => {
+    return (user === Meteor.user().username) ? "channel-me" : "";
   }
 });

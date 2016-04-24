@@ -1,4 +1,9 @@
+Session.set('toScroll',true);
+
 Template.chatbox.helpers({
+    scrollDown: function(){
+      Session.set('toScroll',true);
+    },
     chatMessage: function() {
       return ChannelsChat.find({});
     },
@@ -119,14 +124,14 @@ Template.chatbox.helpers({
       var channelObj = Channels.findOne({});
       var roomURL = channelObj["channelURL"];
       var ownerName = channelObj["ownerName"];
-      var userLevel = ownerName === username ? "text-owner": null
-                    || ChannelsModList.findOne({ roomURLHandler: roomURL, user: username }) ? "text-mod": null
-                    || username !== undefined ? "text-user": "";
+      var userLevel = ownerName === username ? "channel-owner": null
+                    || ChannelsModList.findOne({ roomURLHandler: roomURL, user: username }) ? "channel-mod": null
+                    || username !== undefined ? "channel-user": "";
       return userLevel;
     },
     isGuru: function(username) {
       var channelObj = Channels.findOne({});
-      var isGuru = channelObj["channelGuru"] === username ? "text-guru" : "";
+      var isGuru = channelObj["channelGuru"] === username ? "channel-guru" : ""; /* Change to channel-guru later */
       return isGuru;
     }
 });
@@ -600,10 +605,18 @@ function calculateSecondsBetweenDates(ds,de) {
 
 /* Put here because do not want it to load this script on every  page since it is only used here */
 /* Borrowed from here: http://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up */
-function updateScroll(){
-    var element = document.getElementsByClassName("chatbox")[0];
-    //console.log(element);
-    element.scrollTop = element.scrollHeight;
+function updateScroll(toScroll){
+  try {
+    if (toScroll) {
+      var element = document.getElementsByClassName("chatbox")[0];
+      //console.log(element);
+      element.scrollTop = element.scrollHeight;
+      Session.set('toScroll',false);
+    }
+  }
+  catch(e) {
+    console.log("Not on the correct page to deal with scroll height!");
+  }
 }
 
 
@@ -611,5 +624,5 @@ function updateScroll(){
 Meteor.setInterval(function() {
   Session.set('update',Math.random());
   //Template.chatbox.__helpers.get('getSilencedTime')();
-  updateScroll();
+  updateScroll(Session.get('toScroll'));
 },1000); //may not want to use this

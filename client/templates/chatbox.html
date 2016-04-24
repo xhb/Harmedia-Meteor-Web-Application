@@ -3,7 +3,7 @@
   {{checkIfSilencedOrBanned "silence"}}
   <ul class="chatbox border-3d main-font-color">
     {{#each chatMessage}}
-      <li>{{formatTimeStamp timestamp}} - <span class="{{ isGuru senderName }}"><span class="text-bold {{ getTextColor senderName }}">{{senderName}}</span></span>:
+      <li>{{formatTimeStamp timestamp}} - <span class="{{ isGuru senderName }}"></span><span class="{{ getTextColor senderName }}">{{senderName}}</span>:
       {{#each messageInChat message}}
         {{#if doesEmoteExist this}}
           <img src="{{parseMessageForEmotesUrl this}}" alt="{{parseMessageForEmotesAlt this}}" width="22" height="22"> <!-- 22x22 seems to be preferred size -->
@@ -12,6 +12,7 @@
         {{/if}}
       {{/each}}
       </li>
+      {{scrollDown}}
     {{/each}}
   </ul>
   {{#if currentUser}}

@@ -1,13 +1,20 @@
 <template name="channelBrowser">
-  <select class="form-control" id="searchBy">
-    <option>Owner</option>
-    <option>Tags</option>
-    <option>Topic</option>
-  </select>
-  <input type="text" class="form-control" id="searchInput">
-  <table class="table table-condensed table-striped table-bordered">
+  <div class="row">
+    <div id="dropdown_search">
+      <select class="form-control" id="searchBy">
+        <option>Owner</option>
+        <option>Tags</option>
+        <option>Topic</option>
+      </select>
+    </div>
+    <div id="text_search">
+      <input type="text" class="form-control" id="searchInput">
+    </div>
+  </div>
+  <br class="clear" />
+  <table class="table table-condensed table-striped table-bordered table-border">
     <thead>
-      <tr>
+      <tr class="main-font-color">
         <th>#</th>
         <th>Channel URL</th>
         <th>Channel Topic</th>
@@ -18,14 +25,14 @@
     </thead>
     <tbody>
       {{#each getFilteredChannels}}
-        <tr>
-          <td>{{@index}}</td>
-          <td><a href="/c/{{channelURL}}">{{channelURL}}</a></td>
-          <td>{{channelTopic}}</td>
+        <tr class="main-font-color">
+          <th>{{incCount @index}}</th>
+          <th><a href="/c/{{channelURL}}">{{channelURL}}</a></th>
+          <th>{{channelTopic}}</th>
           {{getCurrentVideo channelURL}}
-          <td>{{getCurrentVideoSession channelURL}}</td>
-          <td>{{ownerName}}</td>
-          <td>{{viewerCount}}</td>
+          <th>{{getCurrentVideoSession channelURL}}</th>
+          <th>{{ownerName}}</th>
+          <th>{{viewerCount}}</th>
         </tr>
       {{/each}}
     </tbody>

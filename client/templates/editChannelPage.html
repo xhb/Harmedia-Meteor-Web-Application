@@ -8,28 +8,28 @@
         Incorrect params inserted!  Please re-input value
       </div>
     {{/if}}
-      <h2>Editing channel: <span id="urlHandler">{{channel.channelURL}}</span></h2>
-      <form id="channelUpdateForm" class="form-horizontal collapse navbar-collapse">
+      <h2 class="main-font-color">Editing channel: <span id="urlHandler">{{channel.channelURL}}</span></h2>
+      <form id="channelUpdateForm" class="form-horizontal collapse navbar-collapse main-font-color">
         <div class="form-group">
-          <label for="inputTopic" class="col-sm-2 control-label">Topic</label>
+          <label for="inputTopic" class="col-sm-2 control-label main-font-color">Topic</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputTopic" placeholder="Topic" value="{{channel.channelTopic}}" min="5" max="32">
+            <input type="text" class="form-control main-font-color" id="inputTopic" placeholder="Topic" value="{{channel.channelTopic}}" min="5" max="32">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group main-font-color">
           <label for="inputPassword" class="col-sm-2 control-label">Password</label>
           <div class="col-sm-8">
             <input type="Password" class="form-control" id="inputPassword" placeholder="Password" min="0" max="16">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group main-font-color">
           <label for="inputTags" class="col-sm-2 control-label">Tags</label>
           <div class="col-sm-8">
             <!--<textarea id="inputTags" rows="4" cols="90" placeholder="Insert tags..."></textarea>-->
             {{> taggle}}
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group main-font-color">
           <div class="col-sm-offset-2 col-sm-8" style="text-align: right;">
             <button type="submit" class="btn btn-default">Save</button>
             <!-- <a href="/mychannels" class="btn btn-primary">Cancel</a>-->

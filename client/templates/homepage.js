@@ -3,6 +3,9 @@ Template.homepage.helpers({
   getTop10Channels: function() {
     return Channels.find({});
   },
+  incCount: (count) => {
+    return count+1;
+  },
   getCurrentVideo: function(url) {
     return Meteor.call("getCurrentVideoForURL", url, function(error,result) {
       if (error || !result) {

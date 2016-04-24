@@ -69,5 +69,5 @@ function isValidLength(val,small,big) {
 
 function checkTagLength(t,l) {
   //the length of array t has to be greater than 0 or less than l
-  return t.length < l;
+  return t.length <= l;
 }
