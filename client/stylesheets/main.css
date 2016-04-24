@@ -343,6 +343,7 @@ li.channel-user:nth-child(odd) {
 
 #server-video-time {
   margin-top: 3px;
+  font-size: 12px;
 }
 
 .chatbox {
