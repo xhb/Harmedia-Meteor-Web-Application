@@ -1,3 +1,7 @@
+/*
+  This code needs to be refactored a bit to better deal with increased server load.
+*/
+
 Session.set('toScroll',true);
 
 Template.chatbox.helpers({

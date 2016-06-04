@@ -131,9 +131,6 @@ li input.taggle_input:focus {
 }
 
 .taggle_text {
-  /*color: #000000;
-  text-shadow: 0 1px 0 #ffffff;
-  opacity: .6;*/
   color: rgb(120,120,120);
   padding-left: 3px
 }
@@ -204,7 +201,7 @@ tr th a:hover {
 }
 
 .main-font-color {
-  color: rgb(120,120,120); /* Blame Austin */
+  color: rgb(120,120,120);
 }
 
 h1.main-font-color {
@@ -227,11 +224,6 @@ div.main-font-color h2 {
   color: rgb(220, 38, 0);
   border-radius: 4px;
 }
-
-/*.table-bordered {
-  margin-top: 2%;
-  border:2px solid #000000;
-}*/
 
 .table-border {
   border: 3px solid rgb(130, 130, 130);
@@ -267,18 +259,6 @@ ul.chatbox li  span.channel-guru:before {
   -moz-osx-font-smoothing: grayscale;
   content:"\e104" "\a0";
 }
-
-/* Channel guru shit */
-/*.chatbox span.channel-guru:before {
-}
-
-.channel-guru {
-}
-
-.channel-me {
-  font-weight: bolder;
-  text-decoration: underline;
-}*/
 
 .chatbox span.channel-owner:before {
   content: url("imgs/owner-icon-5.png") " ";
@@ -384,27 +364,6 @@ li.channel-user:nth-child(odd) {
   font-size: 20px;
 }
 
-/*.text-bold {
-  font-weight: bold;
-}
-
-.text-owner {
-  color: rgb(255,50,0);
-}
-
-.text-mod:before {
-  content: url("http://www.sirpink.net/uploads/2/4/0/0/24009376/custom_themes/587264173791500512/files/mod-symbol.png") "\00a0";
-}
-
-.text-mod {
-  color: rgb(0,150,255);
-}
-
-.text-user {
-  color: rgb(120,120,120);
-  font-style: oblique;
-}*/
-
 .channel-guru:before {
 }
 
@@ -413,11 +372,6 @@ li.channel-user:nth-child(odd) {
   text-shadow: 1px 1px 0px #000000;
   font-size: 20px;
 }
-
-/*.viewer-count-text:before {
-  content: &emsp;
-}*/
-
 
 .glyphicon-user {
   color: rgb(255,0,0); /* May want to change to using another class */
