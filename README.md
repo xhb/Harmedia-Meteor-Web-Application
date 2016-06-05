@@ -22,7 +22,10 @@ _* Note: This project requires you to install Meteor.  One can find meteor at ht
   - Emotes
   - Moderation
   - Guru (person with control of video state) & YouTube Synchronization
+<<<<<<< HEAD
   - Channel customization (BETA)
+=======
+>>>>>>> origin/master
 - Channel Browsing 
 
 ### Future Features:
