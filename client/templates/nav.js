@@ -27,6 +27,7 @@ Template.nav.events({
   'click #deleteAccount': function() {
       var toDisplayAgain = 'y';
       while (toDisplayAgain.toLowerCase() === 'y' || toDisplayAgain.toLowerCase() === 'yes') {
+        toDisplayAgain = toDisplayAgain || "null"; //added to get rid of .toLowerCase() of undefined error
         var inputUsername = prompt("Enter `"+ Meteor.user().username + "' and hit 'OK' to verify deleting your account!");
         if (inputUsername !== Meteor.user().username) {
           var toDisplayAgain = prompt("Incorrect username entered!  Would you like to try typing in your username again?");

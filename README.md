@@ -21,15 +21,16 @@ _* Note: This project requires you to install Meteor.  One can find meteor at ht
   - Tagging
   - Emotes
   - Moderation
-  - Guru (person with control of video state) & Synchronization
+  - Guru (person with control of video state) & YouTube Synchronization
+  - Channel customization (BETA)
 - Channel Browsing 
 
 ### Future Features:
 - More user levels (Co-owners, regulars, etc)
-- Channel customization
 - More optimized chat
 - More reliable viewer list updating
 - Tweak syncing to better fit all users
+- Adding more video synchronization support
 
 ### Mod Commands:
     /guru <user> 

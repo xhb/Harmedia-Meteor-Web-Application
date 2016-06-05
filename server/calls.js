@@ -14,6 +14,7 @@ Meteor.methods({
       channelPassword: password,
       channelTags: [],
       channelGuru: "",
+      channelStyles: "", /* Used for channel CSS styling (Adding 6-5-2016) */
       createdAt: new Date(),
       updatedAt: new Date()
     });
@@ -69,11 +70,12 @@ Meteor.methods({
     Meteor.users.remove({ username: u });//Need to remove from accounts database
   },
   // Called when a user wants to update the collection data of a specific channel by UrlHandler
-  updateChannel: function(urlHandler,topic,password,tags) {
+  updateChannel: function(urlHandler,topic,password,tags,styles) {
     Channels.update({channelURL: urlHandler }, { $set: {
       channelTopic: topic,
       channelPassword: password,
       channelTags: tags,
+      channelStyles: styles,
       updatedAt: new Date()
     }});
   },

@@ -1,5 +1,6 @@
 <template name="channelPage">
   {{#if channel}}
+  <style>{{getCSSStyles}}</style>
     <div class="c_center main-font-color">
       <h2> {{channel.channelTopic}} || {{channel.ownerName}} <span class="glyphicon glyphicon-user"><span class="viewer-count-text">{{channel.viewerCount}}</span></span> </h2>
     </div>
