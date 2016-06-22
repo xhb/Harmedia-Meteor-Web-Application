@@ -2,12 +2,12 @@
 # Harmedia
 _* Note: This project requires you to install Meteor.  One can find meteor at https://www.meteor.com/ *_
 ## Harmedia is a YouTube video client synchronization web platform.
-### Meteor uses the publish susbcribe model to create very reactive web applications.  Some of the key libraries that were used in this web application are as followed:
+### Meteor uses the publish/subscribe model to create very reactive web applications.  Some of the key libraries that were used in this web application are as followed:
 * [Blaze](http://guide.meteor.com/blaze.html) - Meteors package for reactive templating
 * [Iron Router](https://github.com/iron-meteor/iron-router) - Handled webpage routing
 * [Sessions](https://docs.meteor.com/api/session.html) - Global reactive object to store key-value pairs (Use reactive package for local reactive storage objects)
 * [Bootstrap](http://getbootstrap.com/) - Used for easy frontend development so we could focus on the backend
-* [Accounts](https://docs.meteor.com/api/accounts.html) - Meteor's built-in account system that I slightly modified to fit our need
+* [Accounts](https://docs.meteor.com/api/accounts.html) - Meteor's built-in account system that we slightly modified to fit our need
 
 ### Basic Features:
 - Account System
