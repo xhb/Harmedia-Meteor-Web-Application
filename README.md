@@ -5,7 +5,7 @@ _* Note: This project requires you to install Meteor.  One can find meteor at ht
 ### Meteor uses the publish/subscribe model to create very reactive web applications.  Some of the key libraries that were used in this web application are as followed:
 * [Blaze](http://guide.meteor.com/blaze.html) - Meteors package for reactive templating
 * [Iron Router](https://github.com/iron-meteor/iron-router) - Handled webpage routing
-* [Sessions](https://docs.meteor.com/api/session.html) - Global reactive object to store key-value pairs (Use reactive package for local reactive storage objects)
+* [Sessions](https://docs.meteor.com/api/session.html) - Global reactive object to store key-value pairs (Use reactive vars package for local reactive storage objects)
 * [Bootstrap](http://getbootstrap.com/) - Used for easy frontend development so we could focus on the backend
 * [Accounts](https://docs.meteor.com/api/accounts.html) - Meteor's built-in account system that we slightly modified to fit our need
 
@@ -21,13 +21,17 @@ _* Note: This project requires you to install Meteor.  One can find meteor at ht
   - Tagging
   - Emotes
   - Moderation
-  - Guru (person with control of video state) & YouTube Synchronization
+  - Guru (person with control of video state)
+  - YouTube Synchronization
   - Channel customization (BETA)
 - Channel Browsing 
 
 ### Future Features:
-- More user levels (Co-owners, regulars, etc)
+- More user levels (Admins, Global Moderators, Co-owners, regulars, etc)
 - More optimized chat
+- Whispers
+- Profiles
+- Friends
 - More reliable viewer list updating
 - Tweak syncing to better fit all users
 - Adding more video synchronization support (Vimeo, mp4s, etc.)
